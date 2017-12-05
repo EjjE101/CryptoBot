@@ -1,4 +1,4 @@
-# CryptoBot v1.0.0
+# CryptoBot v1.0.1
 
 <a href="#"><img src="images/bot.png"
 alt="" width="201" height="155"/></a>
