@@ -57,7 +57,7 @@ class Client(object):
         self.subs = False
         self.orderbooks = {}
         self.connect()
-	    PeriodicCallback(self.keep_alive, 1000, io_loop=self.ioloop).start()
+	PeriodicCallback(self.keep_alive, 1000, io_loop=self.ioloop).start()
         self.ioloop.start()
 
     @gen.coroutine
