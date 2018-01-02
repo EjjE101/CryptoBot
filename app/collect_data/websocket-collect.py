@@ -2,7 +2,6 @@ import aiohttp
 import asyncio
 import ujson
 from copy import deepcopy
-from datetime import datetime
 import time
 import motor.motor_asyncio
 
@@ -11,23 +10,24 @@ db = client.bitfinex
 
 # Pairs which generate orderbook for.
 PAIRS = [
-             "btcusd","btceur",
+             "btcusd",
+#             "btceur",
              "ltcusd", "ltcbtc",
              "ethusd", "ethbtc",
-             "etcbtc", "etcusd",
+#             "etcbtc", "etcusd",
 ##             "rrtusd", "rrtbtc",
 ##             "zecusd", "zecbtc",
-             "xmrusd", "xmrbtc",
-             "dshusd", "dshbtc",
+#             "xmrusd", "xmrbtc",
+#             "dshusd", "dshbtc",
 ##             "bccbtc", "bcubtc",
 ##             "bccusd","bcuusd",
              "xrpusd","xrpbtc",
              "iotusd","iotbtc","ioteth",
              "eosusd","eosbtc","eoseth",
-             "sanusd","sanbtc","saneth",
-             "omgusd","omgbtc","omgeth",
-             "bchusd","bchbtc","bcheth",
-             "neousd","neobtc","neoeth",
+#             "sanusd","sanbtc","saneth",
+#             "omgusd","omgbtc","omgeth",
+#             "bchusd","bchbtc","bcheth",
+#             "neousd","neobtc","neoeth",
 ##             "etpusd","etpbtc","etpeth",
 ##             "qtmusd","qtmbtc","qtmeth",
 ##             "bt1usd","bt2usd","bt1btc","bt2btc",
@@ -128,6 +128,7 @@ async def save_books():
     global orderbooks
     global cnt_msg
 
+    # give it time to create all orderbooks.
     await asyncio.sleep(30)
     exc_time = 0
 
