@@ -4,7 +4,8 @@
 alt="" width="201" height="155"/></a>
 
 ## About
-CryptoBot will be an automated, high frequency trading bot for cryptocurrencies. It uses **Machine Learning** to decide when to trade. Currently it is a work in progress.
+CryptoBot will be an automated, high frequency trading bot for cryptocurrencies. It uses **Machine Learning** to decide when to trade. Currently it is a work in progress.  
+The bot is rewritten to work with bitfinex.
 
 
 ## List of sources
@@ -16,11 +17,13 @@ The project is written entirely in **Python**, with the exception of some shell 
 
 ## EjjE101
 I found this project on github and have some ideas about improving it.
-- [ ] implement websocket         [ 40% done ]
+- [x] implement websocket         [ 100% done ]
     todo:
     - [x] convert to bitfinex
     - [x] multiple currencies pairs
-    - [ ] improve code
+    - [x] improve code  
+- [ ] use tensorflow
+    - [ ] return model to original paper as starting point
 - [ ] improve trading strategy    [  0% done ]
     todo:
     - [ ] implement websocket
@@ -32,7 +35,10 @@ I found this project on github and have some ideas about improving it.
 
 **What am i working on now?**
 
-Currently working on implementing the websocket connection en improving the code that i have written. I need this because of the rate limit that is on de REST api, on bitfinex this is 90 request per second. With the websocket connection i received more then 1000 messages per second.
+[done] Currently working on implementing the websocket connection en improving the code that i have written. I need this because of the rate limit that is on de REST api, on bitfinex this is 90 request per second. With the websocket connection i received more then 1000 messages per second.
+
+[work in progress]  
+implement tensorflow and reset bot to original paper.
 
 **Ideas**
 
