@@ -7,7 +7,7 @@ alt="" width="201" height="155"/></a>
 CryptoBot is(will be) an automated, high frequency trading bot for cryptocurrencies. It uses **Machine Learning** to decide when to trade. Currently it supports only Bitcoins, and trading on the BTCC exchange. In the future I intend on adding other currencies and exchanges.  
 
 ## List of sources
-https://github.com/AdeelMufti/CryptoBot
+https://github.com/AdeelMufti/CryptoBot  
 https://github.com/cbyn/bitpredict
 
 The project is written entirely in **Python**, with the exception of some shell scripts.
