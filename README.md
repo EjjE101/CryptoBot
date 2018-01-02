@@ -4,11 +4,13 @@
 alt="" width="201" height="155"/></a>
 
 ## About
-CryptoBot is(will be) an automated, high frequency trading bot for cryptocurrencies. It uses **Machine Learning** to decide when to trade. Currently it supports only Bitcoins, and trading on the BTCC exchange. In the future I intend on adding other currencies and exchanges.  
+CryptoBot will be an automated, high frequency trading bot for cryptocurrencies. It uses **Machine Learning** to decide when to trade. Currently it is a work in progress.
+
 
 ## List of sources
 https://github.com/AdeelMufti/CryptoBot  
-https://github.com/cbyn/bitpredict
+https://github.com/cbyn/bitpredict  
+https://mmquant.net/replicating-orderbooks-from-websocket-stream-with-python-and-asyncio/
 
 The project is written entirely in **Python**, with the exception of some shell scripts.
 
@@ -45,6 +47,6 @@ BTC 148XxY4qVf7z5X9rK3FtxiJaUcynXLraxb</br>
 ETH 0xb3EBA8abd933Bd7572dDF0c64aCD8eBaFFB420AB
 
 All sponsers will be mentioned below
--[ ]
--[ ]
--[ ]
+-[ ]  
+-[ ]  
+-[ ]  
