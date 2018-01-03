@@ -37,12 +37,17 @@ I found this project on github and have some ideas about improving it.
 
 [done] Currently working on implementing the websocket connection en improving the code that i have written. I need this because of the rate limit that is on de REST api, on bitfinex this is 90 request per second. With the websocket connection i received more then 1000 messages per second.
 
-[work in progress]  
+[work in progress]
+check all  
 implement tensorflow and reset bot to original paper.
 
 **Ideas**
 
 The trading strategy that is currently used opens a position and closest it 15 seconds later. I think this can be improved to re-evaluate your current position every second.
+
+**Updates**  
+
+[2-1-18] I have started to log a couple of orderbooks and trades on a €3.- VPS. Maybe a should make this data available.  
 
 **Help the project**
 
