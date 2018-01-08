@@ -12,15 +12,15 @@ db = client.bitfinex
 PAIRS = [
              "btcusd",
 #             "btceur",
-             "ltcusd",
+#             "ltcusd",
              "ltcbtc",
-             "ethusd",
+#             "ethusd",
              "ethbtc",
 #             "etcbtc", "etcusd",
 ##             "rrtusd", "rrtbtc",
 ##             "zecusd", "zecbtc",
 #             "xmrusd", "xmrbtc",
-             "dshusd",
+#             "dshusd",
              "dshbtc",
 ##             "bccbtc", "bcubtc",
 ##             "bccusd","bcuusd",
@@ -29,7 +29,7 @@ PAIRS = [
              "iotusd",
              "iotbtc",
 #             "ioteth",
-             "eosusd",
+#             "eosusd",
              "eosbtc",
 #              "eoseth",
 #             "sanusd","sanbtc","saneth",
@@ -79,7 +79,6 @@ def build_book(res, pair):
 
     # Filter out subscription status messages.
     if res.data[0] == '[':
-
         # String to json
         data = ujson.loads(res.data)[1]
 
@@ -91,12 +90,10 @@ def build_book(res, pair):
                        str(level[0]): [str(level[1]), str(level[2])]
                        for level in data if level[2] > 0
             }
-
             asks = {
                        str(level[0]): [str(level[1]), str(level[2])[1:]]
                        for level in data if level[2] < 0
             }
-
             orderbooks[pair]['bids'] = bids
             orderbooks[pair]['asks'] = asks
 
@@ -111,22 +108,16 @@ def build_book(res, pair):
             # 2. - When count = 0 then you have to delete the price level.
             #   2.1- If amount = 1 then remove from bids
             #   2.2- If amount = -1 then remove from asks
-
             data = [str(data[0]), str(data[1]), str(data[2])]
             if int(data[1]) > 0:  # 1.
-
                 if float(data[2]) > 0:  # 1.1
                     orderbooks[pair]['bids'].update({data[0]: [data[1], data[2]]})
-
                 elif float(data[2]) < 0:  # 1.2
                     orderbooks[pair]['asks'].update({data[0]: [data[1], str(data[2])[1:]]})
-
             elif data[1] == '0':  # 2.
-
                 if data[2] == '1':  # 2.1
                     if orderbooks[pair]['bids'].get(data[0]):
                         del orderbooks[pair]['bids'][data[0]]
-
                 elif data[2] == '-1':  # 2.2
                     if orderbooks[pair]['asks'].get(data[0]):
                         del orderbooks[pair]['asks'][data[0]]
