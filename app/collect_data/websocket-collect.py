@@ -165,7 +165,7 @@ async def get_book(pair, session):
                 cnt_msg += 1
                 totale_msg_cnt += 1
                 if cnt_msg == 1500:
-                    ws.send_json({'event': 'ping'})
+                    await ws.send_json({'event': 'ping'})
                     print(pair_dict['symbol'], 'book: ping send')
                     cnt_msg = 0
 
