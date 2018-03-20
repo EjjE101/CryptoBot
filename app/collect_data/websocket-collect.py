@@ -12,7 +12,7 @@ db = client.bitfinex
 PAIRS = [
              "btcusd",
 #             "btceur",
-             "ltcusd", "ltcbtc",
+             "ltcusd", # "ltcbtc",
              "ethusd", "ethbtc",
 #             "etcbtc", "etcusd",
 ##             "rrtusd", "rrtbtc",
@@ -32,7 +32,7 @@ PAIRS = [
 #             "sanusd","sanbtc","saneth",
 #             "omgusd","omgbtc","omgeth",
 #             "bchusd","bchbtc","bcheth",
-             "neousd","neobtc","neoeth",
+             "neousd" #,"neobtc","neoeth",
 ##             "etpusd","etpbtc","etpeth",
 ##             "qtmusd","qtmbtc","qtmeth",
 ##             "bt1usd","bt2usd","bt1btc","bt2btc",
