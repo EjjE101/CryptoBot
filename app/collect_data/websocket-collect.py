@@ -12,30 +12,27 @@ db = client.bitfinex
 PAIRS = [
              "btcusd",
 #             "btceur",
-#             "ltcusd",
-             "ltcbtc",
-#             "ethusd",
-             "ethbtc",
+             "ltcusd", "ltcbtc",
+             "ethusd", "ethbtc",
 #             "etcbtc", "etcusd",
 ##             "rrtusd", "rrtbtc",
 ##             "zecusd", "zecbtc",
 #             "xmrusd", "xmrbtc",
 #             "dshusd",
-             "dshbtc",
+#             "dshbtc",
 ##             "bccbtc", "bcubtc",
 ##             "bccusd","bcuusd",
-#             "xrpusd",
-#             "xrpbtc",
-             "iotusd",
-             "iotbtc",
+             "xrpusd", "xrpbtc",
+#             "iotusd",
+#             "iotbtc",
 #             "ioteth",
 #             "eosusd",
-             "eosbtc",
+#             "eosbtc",
 #              "eoseth",
 #             "sanusd","sanbtc","saneth",
 #             "omgusd","omgbtc","omgeth",
 #             "bchusd","bchbtc","bcheth",
-#             "neousd","neobtc","neoeth",
+             "neousd","neobtc","neoeth",
 ##             "etpusd","etpbtc","etpeth",
 ##             "qtmusd","qtmbtc","qtmeth",
 ##             "bt1usd","bt2usd","bt1btc","bt2btc",
@@ -125,7 +122,7 @@ def build_book(res, pair):
 async def save_books():
     """ Prints orderbooks snapshots for all pairs every 10 seconds. """
     global orderbooks
-    global cnt_msg
+    global totale_msg_cnt
 
     # give it time to create all orderbooks.
     await asyncio.sleep(30)
@@ -143,40 +140,50 @@ async def save_books():
             book['bids'] = [{'price': float(x[0]), 'amount': float(x[1])} for x in bids]
             book['asks'] = [{'price': float(x[0]), 'amount': float(x[1])} for x in asks]
             result = await db[pair + '_books'].insert_one(book)
-        # print('msg per sec: {}'.format(cnt_msg)) # debug
-        cnt_msg = 0 # debug
+
+        print('msg per sec: ', totale_msg_cnt)
+        totale_msg_cnt = 0
         exc_time = time.time() - start_time
         await asyncio.sleep(1-exc_time)
 
 
 async def get_book(pair, session):
     """ Subscribes for orderbook updates """
-    global cnt_msg
+    cnt_msg = 0
+    global totale_msg_cnt
     print('enter get_book, pair: {}'.format(pair))
     pair_dict = deepcopy(BOOK_SUB_MESG)
     pair_dict.update({'symbol': 't'+pair.upper()})
     async with session.ws_connect('wss://api.bitfinex.com/ws/2') as ws:
-        ws.send_json(pair_dict)
-        while 1:
-            res = await ws.receive()
-            cnt_msg += 1
-            # print(pair_dict['symbol'], res.data)  # debug
-            build_book(res, pair)
+        async for msg in ws:
+            if 'event' in msg.data:
+                print(pair_dict['symbol'], msg.data)
+                if 'info' in msg.data:
+                    await ws.send_json(pair_dict)
+            else:
+                build_book(msg, pair)
+                cnt_msg += 1
+                totale_msg_cnt += 1
+                if cnt_msg == 1500:
+                    ws.send_json({'event': 'ping'})
+                    print(pair_dict['symbol'], 'book: ping send')
+                    cnt_msg = 0
 
 async def get_trades(pair, session):
     """ Subscribes for orderbook updates """
-    global cnt_msg
+    cnt_msg = 0
+    global totale_msg_cnt
     print('enter get_trades, pair: {}'.format(pair))
     pair_dict = deepcopy(TRADES_SUB_MESG)
     pair_dict.update({'symbol': 't'+pair.upper()})
     async with session.ws_connect('wss://api.bitfinex.com/ws/2') as ws:
-        ws.send_json(pair_dict)
-        while 1:
-            res =  await ws.receive()
-            cnt_msg += 1
-            # print(pair_dict['symbol'], res.data)  # debug
-            if 'tu' in res.data:
-                res = ujson.loads(res.data)
+        async for msg in ws:
+            if 'event' in msg.data:
+                print(pair_dict['symbol'], msg.data)
+                if 'info' in msg.data:
+                    await ws.send_json(pair_dict)
+            elif 'tu' in msg.data:
+                res = ujson.loads(msg.data)
                 trade = {}
                 trade['_id'] = int(res[2][0])
                 trade['timestamp'] = int(res[2][1])
@@ -187,6 +194,15 @@ async def get_trades(pair, session):
                 else:
                     trade['type'] = 'buy'
                 result = await db[pair + '_trades'].insert_one(trade)
+                cnt_msg += 1
+                totale_msg_cnt += 1
+                if cnt_msg == 100:
+                    ws.send_json({'event': 'ping'})
+                    print(pair_dict['symbol'], 'trades: ping send')
+                    cnt_msg = 0
+
+
+
 
 async def main():
     """ Driver coroutine. """
@@ -205,7 +221,7 @@ orderbooks = {
     for pair in PAIRS
 }
 
-cnt_msg = 0
+totale_msg_cnt = 0
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
