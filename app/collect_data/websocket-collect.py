@@ -197,7 +197,7 @@ async def get_trades(pair, session):
                 cnt_msg += 1
                 totale_msg_cnt += 1
                 if cnt_msg == 100:
-                    ws.send_json({'event': 'ping'})
+                    await ws.send_json({'event': 'ping'})
                     print(pair_dict['symbol'], 'trades: ping send')
                     cnt_msg = 0
 
