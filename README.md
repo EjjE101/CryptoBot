@@ -1,3 +1,4 @@
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/EjjE101/CryptoBot.svg?columns=all)](https://waffle.io/EjjE101/CryptoBot)
 # CryptoBot v1.0.1
 
 <a href="#"><img src="images/bot.png"
